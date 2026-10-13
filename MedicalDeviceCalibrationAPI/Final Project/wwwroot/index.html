@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Medical Device Calibration Tracker</title>
+</head>
+<body>
+    <h1>Medical Device Calibration Tracker</h1>
+
+    <h2>Device Information</h2>
+
+    <label>Device Name:</label>
+    <input type="text" id="deviceName">
+    <br><br>
+
+    <label>Calibration Date:</label>
+    <input type="date" id="calibrationDate">
+    <br><br>
+
+    <label>Next Calibration Date:</label>
+    <input type="date" id="nextCalibrationDate">
+    <br><br>
+
+    <label>Technician:</label>
+    <input type="text" id="technician">
+    <br><br>
+
+    <button type="button" id="checkButton">Check Calibration Status</button>
+
+    <h2>Device Information</h2>
+    <p id="deviceInfo">Enter device information above.</p>
+
+    <script>
+
+        document.getElementById("checkButton").onclick = () => {
+
+            const deviceName = document.getElementById("deviceName").value;
+            const calibrationDate = document.getElementById("calibrationDate").value;
+            const nextCalibrationDate = document.getElementById("nextCalibrationDate").value;
+            const technician = document.getElementById("technician").value;
+
+            if (!deviceName || !calibrationDate || !nextCalibrationDate || !technician) {
+                document.getElementById("deviceInfo").textContent =
+                    "Please fill in all fields.";
+                return;
+            }
+            
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const nextDate = new Date(nextCalibrationDate + "T00:00:00");
+
+            const status = nextDate >= today ? "Current" : "Overdue";
+
+            document.getElementById("deviceInfo").innerHTML =
+                "Device Name: " + deviceName + "<br>" +
+                "Calibration Date: " + calibrationDate + "<br>" +
+                "Next Calibration Date: " + nextCalibrationDate + "<br>" +
+                "Technician: " + technician + "<br>" +
+                "Calibration Status: " + status;
+        };
+    </script>
+</body>
+</html>
